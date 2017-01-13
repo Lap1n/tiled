@@ -51,31 +51,30 @@ UpdateLayerButton::UpdateLayerButton(QWidget *parent)
 void UpdateLayerButton::runCommand()
 {
      mMapDocument =  dynamic_cast<MapDocument*>(DocumentManager::instance()->currentDocument());
-    //UpdateLayerCommand ulCommand = new UpdateLayerCommand(mapDocument);
-    //mapDocument->undoStack()->push(ulCommand);
-   // mapDocument->emitRegionEdited(ulCommand->tileRegion(), mapDocument->currentLayer());
-
        mMapDocument =  dynamic_cast<MapDocument*>(DocumentManager::instance()->currentDocument()) ;
 
 
        QRegion paintedRegion;
        QVector<StampBrush::PaintOperation> operations;
        QHash<TileLayer *, QRegion> regionCache;
-        std::map<QString,std::vector<TileLayer*>> tileLayerMap;
+        std::map<QString,TileLayer> tileLayerMap;
        if(mMapDocument->currentLayer()->isTileLayer()){
            TileLayer* currentLayer = dynamic_cast<TileLayer*>(mMapDocument->currentLayer());
+           int index=0;
+           int x=0;
+           int y=0;
            for(Cell cell : *currentLayer){
-               if(cell.tile()->hasProperty(tr("Target Layer"))){
-                    QString targetLayerName=cell.tile()->properties().value(tr("Target Layer")).toString();
-                    TileLayer *currentTile = new TileLayer(tr(""),0,0,mMapDocument->currentLayer()->width(),mMapDocument->currentLayer()->height());
-                    if ( tileLayerMap.find(tr("f")) == tileLayerMap.end() ) {
-                      // not found
-                        tileLayerMap.insert ( std::pair<QString,std::vector<TileLayer*>>(targetLayerName, std::vector<TileLayer*>()) );
-
-
+               y=index/currentLayer->width();
+               x=index%currentLayer->width();
+                int test = cell.tileId();
+                if(test!=-1){
+                    if(cell.tile()->hasProperty(tr("Target Layer"))&&test!=-1){
+                       QString targetLayerName=cell.tile()->properties().value(tr("Target Layer")).toString();
+                       TileLayer* targetLayer=  getSpecifiedTileLayer(targetLayerName);
+                       targetLayer->setCell(x,y,cell);
                     }
-                     tileLayerMap.at(targetLayerName).push_back(currentTile);
-               }
+                }
+               index++;
            }
        }
 
