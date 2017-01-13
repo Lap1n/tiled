@@ -45,6 +45,10 @@ class StampBrush : public AbstractTileTool
     Q_OBJECT
 
 public:
+    struct PaintOperation {
+        QPoint pos;
+        TileLayer *stamp;
+    };
     StampBrush(QObject *parent = nullptr);
     ~StampBrush();
 

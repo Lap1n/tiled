@@ -1,6 +1,6 @@
 /*
- * maintoolbar.h
- * Copyright 2016, Thorbjørn Lindeijer <bjorn@lindijer.nl>
+ * commandbutton.h
+ * Copyright 2010, Jeff Bland <jksb@member.fsf.org>
  *
  * This file is part of Tiled.
  *
@@ -18,46 +18,42 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TILED_INTERNAL_MAINTOOLBAR_H
-#define TILED_INTERNAL_MAINTOOLBAR_H
+#ifndef UPDATELAYERBUTTON_H
+#define UPDATELAYERBUTTON_H
 
-#include <QToolBar>
+#include <QToolButton>
 
-class QToolButton;
+class QMenu;
 
 namespace Tiled {
 namespace Internal {
 
-class CommandButton;
-class Document;
-class UpdateLayerButton;
-
-class MainToolBar : public QToolBar
+class MainWindow;
+class DocumentManager;
+class MapDocument;
+class UpdateLayerButton : public QToolButton
 {
+   Q_OBJECT
+
 public:
-    MainToolBar(QWidget *parent = nullptr);
+    UpdateLayerButton(QWidget *parent);
 
 protected:
     void changeEvent(QEvent *event) override;
 
 private slots:
-    void onOrientationChanged(Qt::Orientation orientation);
-
-    void currentDocumentChanged(Document *document);
+    void runCommand();
+    void showDialog();
+    void populateMenu();
 
 private:
     void retranslateUi();
-
-    QToolButton *mNewButton;
-    QAction *mOpenAction;
-    QAction *mSaveAction;
-    QAction *mUndoAction;
-    QAction *mRedoAction;
-    CommandButton *mCommandButton;
-    UpdateLayerButton* mUpdateLayerButton;
+    TileLayer* getSpecifiedTileLayer(QString& layerName) const;
+    QMenu *mMenu;
+    MapDocument* mMapDocument;
 };
 
 } // namespace Internal
 } // namespace Tiled
 
-#endif // TILED_INTERNAL_MAINTOOLBAR_H
+#endif // PREFERENCESDIALOG_H

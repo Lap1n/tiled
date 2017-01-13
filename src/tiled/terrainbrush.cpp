@@ -219,6 +219,18 @@ void TerrainBrush::doPaint(bool mergeable)
 
     // This method shouldn't be called when current layer is not a tile layer
     TileLayer *tileLayer = currentTileLayer();
+    doPaintTileLayer(stamp,tileLayer,mergeable);
+
+/*
+    if(this->terrain()->hasProperty(tr("Layer Name"))){
+        QString prop = (this->terrain()->properties().value(tr("Layer Name"))).toString();
+        TileLayer *specificTileLayer=getSpecifiedTileLayer(prop);
+        doPaintTileLayer(stamp,specificTileLayer,mergeable);
+    }*/
+}
+void TerrainBrush::doPaintTileLayer(TileLayer *stamp,TileLayer* tileLayer,bool mergeable){
+    // This method shouldn't be called when current layer is not a tile layer
+   // TileLayer *tileLayer = currentTileLayer();
     Q_ASSERT(tileLayer);
 
     if (!tileLayer->bounds().intersects(stamp->bounds()))

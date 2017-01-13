@@ -408,22 +408,28 @@ void MapDocument::rotateSelectedObjects(RotateDirection direction)
  * Adds a layer of the given type to the top of the layer stack. After adding
  * the new layer, emits editLayerNameRequested().
  */
-Layer *MapDocument::addLayer(Layer::TypeFlag layerType)
+Layer *MapDocument::addLayer(Layer::TypeFlag layerType,QString name)
 {
     Layer *layer = nullptr;
-    QString name;
+   // QString name;
 
     switch (layerType) {
     case Layer::TileLayerType:
-        name = tr("Tile Layer %1").arg(mMap->tileLayerCount() + 1);
+        if(name==tr("")){
+            name = tr("Tile Layer %1").arg(mMap->tileLayerCount() + 1);
+        }
         layer = new TileLayer(name, 0, 0, mMap->width(), mMap->height());
         break;
     case Layer::ObjectGroupType:
-        name = tr("Object Layer %1").arg(mMap->objectGroupCount() + 1);
+        if(name==tr("")){
+            name = tr("Object Layer %1").arg(mMap->objectGroupCount() + 1);
+        }
         layer = new ObjectGroup(name, 0, 0, mMap->width(), mMap->height());
         break;
     case Layer::ImageLayerType:
-        name = tr("Image Layer %1").arg(mMap->imageLayerCount() + 1);
+         if(name==tr("")){
+            name = tr("Image Layer %1").arg(mMap->imageLayerCount() + 1);
+         }
         layer = new ImageLayer(name, 0, 0, mMap->width(), mMap->height());
         break;
     }
@@ -431,13 +437,13 @@ Layer *MapDocument::addLayer(Layer::TypeFlag layerType)
 
     const int index = mMap->layerCount();
     mUndoStack->push(new AddLayer(this, index, layer));
-    setCurrentLayerIndex(index);
-
+    if(name==tr("")){
+        setCurrentLayerIndex(index);
+    }
     emit editLayerNameRequested();
 
     return layer;
 }
-
 /**
  * Duplicates the currently selected layer.
  */

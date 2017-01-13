@@ -27,6 +27,7 @@
 #include "mapscene.h"
 #include "tile.h"
 #include "tilelayer.h"
+#include "addremovelayer.h"
 
 #include <cmath>
 
@@ -160,4 +161,21 @@ TileLayer *AbstractTileTool::currentTileLayer() const
         return nullptr;
 
     return dynamic_cast<TileLayer*>(mapDocument()->currentLayer());
+}
+TileLayer *AbstractTileTool::getSpecifiedTileLayer(QString& layerName) const
+{
+     // const QString layerName =(prop.value(tr("Layer Name"))).toString();
+    if (!mapDocument())
+        return nullptr;
+    int index=0;
+    foreach(Layer* tl , mapDocument()->map()->layers()){
+        if(tl->name()==layerName){
+           //  mapDocument()->setCurrentLayerIndex(index);
+             return dynamic_cast<TileLayer*>(tl);
+        }
+        index++;
+    }
+    //If it doesn't exist, we create a new layer
+    return dynamic_cast<TileLayer*>(mapDocument()->addLayer(Layer::TypeFlag::TileLayerType,layerName));
+
 }

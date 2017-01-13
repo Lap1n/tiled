@@ -24,6 +24,7 @@
 #include "commandbutton.h"
 #include "documentmanager.h"
 #include "utils.h"
+#include "updatelayerbutton.h"
 
 #include <QAction>
 #include <QEvent>
@@ -36,7 +37,7 @@ namespace Internal {
 
 MainToolBar::MainToolBar(QWidget *parent)
     : QToolBar(parent)
-    , mCommandButton(new CommandButton(this))
+    , mCommandButton(new CommandButton(this)),mUpdateLayerButton(new UpdateLayerButton(this))
 {
     setObjectName(QLatin1String("MainToolBar"));
     setWindowTitle(tr("Main Toolbar"));
@@ -93,7 +94,7 @@ MainToolBar::MainToolBar(QWidget *parent)
     addAction(mRedoAction);
     addSeparator();
     addWidget(mCommandButton);
-
+    addWidget(mUpdateLayerButton);
     DocumentManager *documentManager = DocumentManager::instance();
     connect(mOpenAction, SIGNAL(triggered(bool)), documentManager, SLOT(openFile()));
     connect(mSaveAction, SIGNAL(triggered(bool)), documentManager, SLOT(saveFile()));

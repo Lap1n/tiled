@@ -333,10 +333,7 @@ QRegion StampBrush::doPaint(int flags)
     return editedRegion;
 }
 
-struct PaintOperation {
-    QPoint pos;
-    TileLayer *stamp;
-};
+
 
 /**
  * Draws the preview layer.

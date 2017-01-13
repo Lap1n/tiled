@@ -142,7 +142,7 @@ public:
     void flipSelectedObjects(FlipDirection direction);
     void rotateSelectedObjects(RotateDirection direction);
 
-    Layer *addLayer(Layer::TypeFlag layerType);
+    Layer *addLayer(Layer::TypeFlag layerType,QString name=tr(""));
     void duplicateLayer();
     void mergeLayerDown();
     void moveLayerUp(int index);

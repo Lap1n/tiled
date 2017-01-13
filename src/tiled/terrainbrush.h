@@ -93,7 +93,7 @@ protected:
 
 private:
     void beginPaint();
-
+    void doPaintTileLayer(TileLayer *stamp,TileLayer* tileLayer,bool mergeable);
     /**
      * Merges the tile layer of its brush item into the current map.
      * \a mergeable determines if this can be merged with similar actions for undo.

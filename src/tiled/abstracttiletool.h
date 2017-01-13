@@ -115,6 +115,7 @@ protected:
      */
     TileLayer *currentTileLayer() const;
 
+    TileLayer *AbstractTileTool::getSpecifiedTileLayer(QString& layerName) const;
 private:
     void setBrushVisible(bool visible);
     void updateBrushVisibility();

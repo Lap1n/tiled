@@ -384,6 +384,10 @@ QtGuiApplication {
         "undocommands.h",
         "undodock.cpp",
         "undodock.h",
+        "updatelayerbutton.cpp",
+        "updatelayerbutton.h",
+        "updatelayercommand.cpp",
+        "updatelayercommand.h",
         "utils.cpp",
         "utils.h",
         "varianteditorfactory.cpp",
@@ -454,7 +458,11 @@ QtGuiApplication {
         condition: qbs.targetOS.contains("macos")
         qbs.install: true
         qbs.installDir: "Tiled.app/Contents/Resources"
-        files: ["images/*.icns"]
+        files: [
+            "images/*.icns",
+            "updatelayer.cpp",
+            "updatelayer.h",
+        ]
     }
 
     // Generate the tiled.rc file in order to dynamically specify the version
